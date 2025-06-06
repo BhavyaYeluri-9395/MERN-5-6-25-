@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Age Calculator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #8e44ad;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: white;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-size: 32px;
+            text-transform: uppercase;
+        }
+
+        .input-container {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: flex;
+            gap: 10px;
+            box-shadow: 4px 4px 8px rgba(0,0,0,0.4);
+        }
+
+        .input-container input[type="date"] {
+            padding: 10px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .input-container button {
+            background-color: #8e44ad;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 30px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .box {
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 4px 4px 8px rgba(0,0,0,0.4);
+        }
+
+        .box h2 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .box p {
+            margin-top: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Age Calculator</h1>
+
+    <div class="input-container">
+        <input type="date" id="dob">
+        <button onclick="calculateAge()">Calculator</button>
+    </div>
+
+    <div class="result">
+        <div class="box">
+            <h2 id="years">00</h2>
+            <p>YEAR</p>
+        </div>
+        <div class="box">
+            <h2 id="months">00</h2>
+            <p>MONTH</p>
+        </div>
+        <div class="box">
+            <h2 id="days">00</h2>
+            <p>DAY</p>
+        </div>
+    </div>
+
+    <script>
+        function calculateAge() {
+            const dob = new Date(document.getElementById("dob").value);
+            const today = new Date();
+
+            if (!dob || dob > today) {
+                alert("Please select a valid date of birth.");
+                return;
+            }
+
+            let years = today.getFullYear() - dob.getFullYear();
+            let months = today.getMonth() - dob.getMonth();
+            let days = today.getDate() - dob.getDate();
+
+            if (days < 0) {
+                months -= 1;
+                days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+            }
+
+            if (months < 0) {
+                years -= 1;
+                months += 12;
+            }
+
+            document.getElementById("years").textContent = years.toString().padStart(2, '0');
+            document.getElementById("months").textContent = months.toString().padStart(2, '0');
+            document.getElementById("days").textContent = days.toString().padStart(2, '0');
+        }
+    </script>
+
+</body>
+</html>
